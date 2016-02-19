@@ -63,7 +63,7 @@ cp -r ${ETC_DIR}/* ${PRST_DIR}/etc/
 # install cli
 curl -k -O https://repo1.maven.org/maven2/com/facebook/presto/presto-cli/${PRST_VER}/presto-cli-${PRST_VER}-executable.jar
 
-mv presto-cli-${PRST_VER}-executable.jar ${PRST_DIR/bin/presto
+mv presto-cli-${PRST_VER}-executable.jar ${PRST_DIR}/bin/presto
 chmod +x ${PRST_DIR/bin/presto
 
 exit 0
