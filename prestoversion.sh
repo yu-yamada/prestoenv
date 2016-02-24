@@ -2,7 +2,7 @@
 
 SCRIPT_DIR=$(cd $(dirname $0);pwd)
 
-if [ ! -f $SCRIPT_DIR/prestoenv.conf];then
+if [ ! -f $SCRIPT_DIR/prestoenv.conf ];then
   echo "$SCRIPT_DIR/prestoenv.conf is not available" 
   exit 1
 fi
