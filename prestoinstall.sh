@@ -1,35 +1,47 @@
 #!/bin/sh
 set -u
 
-# chk args
-if [ $# -ne 1 ];then
-  echo "usage: ${0##*/} [presto-version]"
-  exit 1
-fi
+chk_args () {
+  if [ $1 -ne 1 ];then
+    echo "usage: ${0##*/} [presto-version]"
+    exit 1
+  fi
+}
+
+# chk presto version and url.
+chk_presto_ver () {
+  hr=`curl -LI $1 -w '%{http_code}\n' -s -o /dev/null`
+  if [ "${hr}" = 404 ]; then
+    echo "VERSION:$2 [$1] is not available."
+    exit 1
+  fi
+}
+
+#load conf
+load_conf () {
+  SCRIPT_DIR=$(cd $(dirname $0);pwd)
+  if [ ! -f $SCRIPT_DIR/prestoenv.conf ];then
+    echo "$SCRIPT_DIR/prestoenv.conf is not available" 
+    exit 1
+  fi
+  . $SCRIPT_DIR/prestoenv.conf
+}
+
+chk_args $#
 
 PRST_VER=$1
 PRST_URL="https://repo1.maven.org/maven2/com/facebook/presto/presto-server/${PRST_VER}/presto-server-${PRST_VER}.tar.gz"
 
 # chk presto version and url.
-hr=`curl -LI ${PRST_URL} -w '%{http_code}\n' -s -o /dev/null`
-if [ "${hr}" = 404 ]; then
-  echo "VERSION:${PRST_VER} [${PRST_URL}] is not available."
-  exit 1
-fi
+chk_presto_ver ${PRST_URL} ${PRST_VER}
 
-SCRIPT_DIR=$(cd $(dirname $0);pwd)
-
-if [ ! -f $SCRIPT_DIR/prestoenv.conf ];then
-  echo "$SCRIPT_DIR/prestoenv.conf is not available" 
-  exit 1
-fi
-. $SCRIPT_DIR/prestoenv.conf
+# load setting
+load_conf
 
 if [ ! -d ${ETC_DIR} ];then
   echo "etc dir [${ETC_DIR}]  is not available."
   exit 1
 fi
-
 
 if [ ! -e $PRST_BASE_DIR ];then
   mkdir -p $PRST_BASE_DIR
@@ -42,7 +54,6 @@ if [ ! -f presto-server-${PRST_VER}.tar.gz ];then
 fi
 
 tar zxvf presto-server-${PRST_VER}.tar.gz
-
 
 if [ -e ${PRST_DIR} ];then
   if [ -L ${PRST_DIR} ];then
