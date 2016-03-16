@@ -74,7 +74,7 @@ load_conf
 #create_presto_conf_files
 create_presto_conf ${ETC_DIR}
 
-# TODO
+# TODO hoge
 exit
 
 if [ ! -e $PRST_BASE_DIR ];then
