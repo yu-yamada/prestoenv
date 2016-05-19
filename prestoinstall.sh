@@ -74,9 +74,6 @@ load_conf
 #create_presto_conf_files
 create_presto_conf ${ETC_DIR}
 
-# TODO
-exit
-
 if [ ! -e $PRST_BASE_DIR ];then
   mkdir -p $PRST_BASE_DIR
 fi
@@ -108,6 +105,6 @@ cp -r ${ETC_DIR}/* ${PRST_DIR}/etc/
 curl -k -O https://repo1.maven.org/maven2/com/facebook/presto/presto-cli/${PRST_VER}/presto-cli-${PRST_VER}-executable.jar
 
 mv presto-cli-${PRST_VER}-executable.jar ${PRST_DIR}/bin/presto
-chmod +x ${PRST_DIR/bin/presto
+chmod +x ${PRST_DIR}/bin/presto
 
 exit 0
