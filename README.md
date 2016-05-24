@@ -8,7 +8,7 @@ $ sh prestolist.sh
 $ sh prestoinstall.sh 0.147
 ~~~
 
-# Installing dirs
+# The location of the dirs
 default settings as below.
 
 @see prestoenv.conf
